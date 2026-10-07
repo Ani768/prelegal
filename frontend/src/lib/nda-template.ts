@@ -1,3 +1,12 @@
+function escapeHTML(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
+
 export interface NDAFormData {
   // Purpose
   purpose: string;
@@ -48,12 +57,12 @@ export const defaultFormData: NDAFormData = {
 export function generateCoverPageHTML(data: NDAFormData): string {
   const mndaTerm =
     data.mndaTermType === "expires"
-      ? `Expires ${data.mndaTermYears} year(s) from Effective Date.`
+      ? `Expires ${escapeHTML(data.mndaTermYears)} year(s) from Effective Date.`
       : "Continues until terminated in accordance with the terms of the MNDA.";
 
   const confidentialityTerm =
     data.confidentialityTermType === "years"
-      ? `${data.confidentialityTermYears} year(s) from Effective Date, but in the case of trade secrets until Confidential Information is no longer considered a trade secret under applicable laws.`
+      ? `${escapeHTML(data.confidentialityTermYears)} year(s) from Effective Date, but in the case of trade secrets until Confidential Information is no longer considered a trade secret under applicable laws.`
       : "In perpetuity.";
 
   return `
@@ -63,10 +72,10 @@ export function generateCoverPageHTML(data: NDAFormData): string {
 
 <h3>Purpose</h3>
 <p><em>How Confidential Information may be used</em></p>
-<p>${data.purpose || "[Not specified]"}</p>
+<p>${escapeHTML(data.purpose) || "[Not specified]"}</p>
 
 <h3>Effective Date</h3>
-<p>${data.effectiveDate || "[Not specified]"}</p>
+<p>${escapeHTML(data.effectiveDate) || "[Not specified]"}</p>
 
 <h3>MNDA Term</h3>
 <p><em>The length of this MNDA</em></p>
@@ -77,10 +86,10 @@ export function generateCoverPageHTML(data: NDAFormData): string {
 <p>${confidentialityTerm}</p>
 
 <h3>Governing Law &amp; Jurisdiction</h3>
-<p>Governing Law: ${data.governingLaw || "[Not specified]"}</p>
-<p>Jurisdiction: ${data.jurisdiction || "[Not specified]"}</p>
+<p>Governing Law: ${escapeHTML(data.governingLaw) || "[Not specified]"}</p>
+<p>Jurisdiction: ${escapeHTML(data.jurisdiction) || "[Not specified]"}</p>
 
-${data.modifications ? `<h3>MNDA Modifications</h3><p>${data.modifications}</p>` : ""}
+${data.modifications ? `<h3>MNDA Modifications</h3><p>${escapeHTML(data.modifications)}</p>` : ""}
 
 <p>By signing this Cover Page, each party agrees to enter into this MNDA as of the Effective Date.</p>
 
@@ -97,28 +106,28 @@ ${data.modifications ? `<h3>MNDA Modifications</h3><p>${data.modifications}</p>`
   </tr>
   <tr>
     <td><strong>Print Name</strong></td>
-    <td>${data.party1Name || ""}</td>
-    <td>${data.party2Name || ""}</td>
+    <td>${escapeHTML(data.party1Name)}</td>
+    <td>${escapeHTML(data.party2Name)}</td>
   </tr>
   <tr>
     <td><strong>Title</strong></td>
-    <td>${data.party1Title || ""}</td>
-    <td>${data.party2Title || ""}</td>
+    <td>${escapeHTML(data.party1Title)}</td>
+    <td>${escapeHTML(data.party2Title)}</td>
   </tr>
   <tr>
     <td><strong>Company</strong></td>
-    <td>${data.party1Company || ""}</td>
-    <td>${data.party2Company || ""}</td>
+    <td>${escapeHTML(data.party1Company)}</td>
+    <td>${escapeHTML(data.party2Company)}</td>
   </tr>
   <tr>
     <td><strong>Notice Address</strong></td>
-    <td>${data.party1Address || ""}</td>
-    <td>${data.party2Address || ""}</td>
+    <td>${escapeHTML(data.party1Address)}</td>
+    <td>${escapeHTML(data.party2Address)}</td>
   </tr>
   <tr>
     <td><strong>Date</strong></td>
-    <td>${data.effectiveDate || ""}</td>
-    <td>${data.effectiveDate || ""}</td>
+    <td>${escapeHTML(data.effectiveDate)}</td>
+    <td>${escapeHTML(data.effectiveDate)}</td>
   </tr>
 </table>
 

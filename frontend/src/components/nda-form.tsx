@@ -155,75 +155,51 @@ export function NDAForm({ data, onChange }: NDAFormProps) {
         />
       </Field>
 
-      <SectionHeader title="Party 1" />
+      {([
+        { prefix: "party1" as const, label: "Party 1", namePlaceholder: "John Doe", titlePlaceholder: "CEO", companyPlaceholder: "Acme Corp" },
+        { prefix: "party2" as const, label: "Party 2", namePlaceholder: "Jane Smith", titlePlaceholder: "CTO", companyPlaceholder: "Widget Inc" },
+      ]).map(({ prefix, label, namePlaceholder, titlePlaceholder, companyPlaceholder }) => (
+        <div key={prefix}>
+          <SectionHeader title={label} />
 
-      <div className="grid grid-cols-2 gap-3">
-        <Field label="Full Name">
-          <Input
-            value={data.party1Name}
-            onChange={(e) => update("party1Name", e.target.value)}
-            placeholder="John Doe"
-          />
-        </Field>
-        <Field label="Title">
-          <Input
-            value={data.party1Title}
-            onChange={(e) => update("party1Title", e.target.value)}
-            placeholder="CEO"
-          />
-        </Field>
-      </div>
+          <div className="grid grid-cols-2 gap-3 mt-4">
+            <Field label="Full Name">
+              <Input
+                value={data[`${prefix}Name`]}
+                onChange={(e) => update(`${prefix}Name`, e.target.value)}
+                placeholder={namePlaceholder}
+              />
+            </Field>
+            <Field label="Title">
+              <Input
+                value={data[`${prefix}Title`]}
+                onChange={(e) => update(`${prefix}Title`, e.target.value)}
+                placeholder={titlePlaceholder}
+              />
+            </Field>
+          </div>
 
-      <Field label="Company">
-        <Input
-          value={data.party1Company}
-          onChange={(e) => update("party1Company", e.target.value)}
-          placeholder="Acme Corp"
-        />
-      </Field>
+          <div className="mt-4">
+            <Field label="Company">
+              <Input
+                value={data[`${prefix}Company`]}
+                onChange={(e) => update(`${prefix}Company`, e.target.value)}
+                placeholder={companyPlaceholder}
+              />
+            </Field>
+          </div>
 
-      <Field label="Notice Address">
-        <Input
-          value={data.party1Address}
-          onChange={(e) => update("party1Address", e.target.value)}
-          placeholder="Email or postal address"
-        />
-      </Field>
-
-      <SectionHeader title="Party 2" />
-
-      <div className="grid grid-cols-2 gap-3">
-        <Field label="Full Name">
-          <Input
-            value={data.party2Name}
-            onChange={(e) => update("party2Name", e.target.value)}
-            placeholder="Jane Smith"
-          />
-        </Field>
-        <Field label="Title">
-          <Input
-            value={data.party2Title}
-            onChange={(e) => update("party2Title", e.target.value)}
-            placeholder="CTO"
-          />
-        </Field>
-      </div>
-
-      <Field label="Company">
-        <Input
-          value={data.party2Company}
-          onChange={(e) => update("party2Company", e.target.value)}
-          placeholder="Widget Inc"
-        />
-      </Field>
-
-      <Field label="Notice Address">
-        <Input
-          value={data.party2Address}
-          onChange={(e) => update("party2Address", e.target.value)}
-          placeholder="Email or postal address"
-        />
-      </Field>
+          <div className="mt-4">
+            <Field label="Notice Address">
+              <Input
+                value={data[`${prefix}Address`]}
+                onChange={(e) => update(`${prefix}Address`, e.target.value)}
+                placeholder="Email or postal address"
+              />
+            </Field>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

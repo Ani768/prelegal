@@ -1,5 +1,3 @@
-"use client";
-
 import { NDAFormData, generateCoverPageHTML, generateStandardTermsHTML } from "./nda-template";
 
 export async function downloadPDF(data: NDAFormData) {
