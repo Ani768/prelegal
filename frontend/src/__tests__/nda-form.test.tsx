@@ -61,9 +61,10 @@ describe("NDAForm", () => {
     expect(screen.getByDisplayValue("BetaCo")).toBeInTheDocument();
   });
 
-  it("renders the effective date input with default value", () => {
-    render(<NDAForm data={formData} onChange={onChange} />);
-    const dateInput = screen.getByDisplayValue(formData.effectiveDate);
+  it("renders the effective date input", () => {
+    const dataWithDate = { ...formData, effectiveDate: "2026-01-15" };
+    render(<NDAForm data={dataWithDate} onChange={onChange} />);
+    const dateInput = screen.getByDisplayValue("2026-01-15");
     expect(dateInput).toBeInTheDocument();
   });
 });

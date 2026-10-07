@@ -8,7 +8,7 @@ import {
 describe("defaultFormData", () => {
   it("has all required fields", () => {
     expect(defaultFormData.purpose).toBeTruthy();
-    expect(defaultFormData.effectiveDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(defaultFormData.effectiveDate).toBe("");
     expect(defaultFormData.mndaTermType).toBe("expires");
     expect(defaultFormData.mndaTermYears).toBe("1");
     expect(defaultFormData.confidentialityTermType).toBe("years");

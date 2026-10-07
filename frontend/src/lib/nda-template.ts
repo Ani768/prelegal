@@ -36,7 +36,7 @@ export interface NDAFormData {
 export const defaultFormData: NDAFormData = {
   purpose:
     "Evaluating whether to enter into a business relationship with the other party.",
-  effectiveDate: new Date().toISOString().split("T")[0],
+  effectiveDate: "",
   mndaTermType: "expires",
   mndaTermYears: "1",
   confidentialityTermType: "years",

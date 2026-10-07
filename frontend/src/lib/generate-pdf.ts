@@ -24,7 +24,6 @@ export async function downloadPDF(data: NDAFormData) {
 </body>
 </html>`;
 
-  // Use the browser's print-to-PDF via a hidden iframe
   const iframe = document.createElement("iframe");
   iframe.style.position = "fixed";
   iframe.style.right = "0";
@@ -32,20 +31,13 @@ export async function downloadPDF(data: NDAFormData) {
   iframe.style.width = "0";
   iframe.style.height = "0";
   iframe.style.border = "none";
+  iframe.srcdoc = fullHTML;
   document.body.appendChild(iframe);
 
-  const doc = iframe.contentDocument || iframe.contentWindow?.document;
-  if (!doc) return;
-
-  doc.open();
-  doc.write(fullHTML);
-  doc.close();
-
-  // Wait for content to render
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  iframe.contentWindow?.print();
-
-  // Clean up after print dialog closes
-  setTimeout(() => document.body.removeChild(iframe), 1000);
+  iframe.addEventListener("load", () => {
+    iframe.contentWindow?.addEventListener("afterprint", () => {
+      document.body.removeChild(iframe);
+    });
+    iframe.contentWindow?.print();
+  });
 }

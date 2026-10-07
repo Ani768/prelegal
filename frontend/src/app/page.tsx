@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { NDAForm } from "@/components/nda-form";
 import { NDAPreview } from "@/components/nda-preview";
@@ -9,6 +9,15 @@ import { downloadPDF } from "@/lib/generate-pdf";
 
 export default function Home() {
   const [formData, setFormData] = useState(defaultFormData);
+
+  useEffect(() => {
+    if (!formData.effectiveDate) {
+      setFormData((prev) => ({
+        ...prev,
+        effectiveDate: new Date().toISOString().split("T")[0],
+      }));
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
